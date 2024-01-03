@@ -1,13 +1,14 @@
 import { useState } from 'react'
+import Layout from './pages/Layout'
 
 
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <h1> Hello dear  this is yuvraj Singh</h1>
+      <Layout />
+
     </>
   )
 }
