@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
 import { AiFillStar } from "react-icons/ai";
 import FoodData from '../api/FoodData';
-const FoodCard = () => {
-    const [food, setFood] = useState(FoodData)
-    console.log(food)
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../redux/slices/CartSlices';
+import { useSelector } from 'react-redux';
 
+const FoodCard = () => {
+
+    const dispatch = useDispatch();
+    const [food, setFood] = useState(FoodData)
 
     return (
 
@@ -13,6 +17,7 @@ const FoodCard = () => {
             <div className=' flex justify-center  flex-wrap gap-6'>
                 {
                     food.map((curElem) => {
+                        const { img, id, price, rating, desc, name } = curElem;
 
                         return (
                             <>
@@ -34,8 +39,13 @@ const FoodCard = () => {
                                                 <AiFillStar /> {curElem.rating}
                                             </span>
                                             <span className=' bg-green-600 text-white rounded-md
-                                    px-2 py-1
-                                    '>
+                                    px-2 py-1 cursor-pointer
+                                    
+                                    '
+                                                onClick={() => {
+                                                    dispatch(addToCart({ id, name, price, rating, img, qty: 1 }));
+                                                }}
+                                            >
                                                 Add to cart
                                             </span>
                                         </div>
