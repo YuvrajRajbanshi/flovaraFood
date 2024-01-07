@@ -3,7 +3,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { BsDash } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa6";
 import { useDispatch } from 'react-redux';
-import { removeFromCart } from '../../redux/slices/CartSlices';
+import { removeFromCart, increamentQty, decreamentQty } from '../../redux/slices/CartSlices';
 
 const Items = ({ id, name, qty, price, img }) => {
 
@@ -23,14 +23,20 @@ const Items = ({ id, name, qty, price, img }) => {
                 </div>
 
                 <div className=' relative'>
-                    <FaTrash onClick={() => dispatch(removeFromCart({ id, img, name, price, qty }))} className='
+                    <FaTrash onClick={() => dispatch(removeFromCart({ id }))} className='
                     cursor-pointer
                     absolute right-0' />
                     <div className=' flex  items-center  gap-3 mt-6'>
-                        <AiOutlinePlus className='  border-red-500 border-2 
+
+                        <BsDash
+                            onClick={qty > 0 ? () => dispatch(decreamentQty({ id })) : (qty = 1)}
+                            className='  border-red-500 border-2 
                          text-black text-2xl p-1 rounded-md cursor-pointer ' />
                         <span>{qty}</span>
-                        <BsDash className='  border-red-500 border-2 
+
+                        <AiOutlinePlus
+                            onClick={() => dispatch(increamentQty({ id }))}
+                            className='  border-red-500 border-2 
                          text-black text-2xl p-1 rounded-md cursor-pointer ' />
                     </div>
                 </div>

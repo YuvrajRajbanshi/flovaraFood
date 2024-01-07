@@ -44,6 +44,7 @@ const FoodCard = () => {
                                     '
                                                 onClick={() => {
                                                     dispatch(addToCart({ id, name, price, rating, img, qty: 1 }));
+
                                                 }}
                                             >
                                                 Add to cart

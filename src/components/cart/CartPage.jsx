@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
 import { AiFillCloseCircle } from "react-icons/ai";
 import { FaShoppingCart } from "react-icons/fa";
+import toast, { Toaster } from 'react-hot-toast';
 
 import Items from './Items';
 import Button from './Button';
@@ -12,11 +13,19 @@ const CartPage = () => {
     const [isCartActive, setIsCartActive] = useState(true)
 
     const addCart = useSelector((state) => state.cart.cart)
+    const totalQty = addCart.reduce((totalQty, item) => totalQty + item.qty, 0);
+    const hadleToast = () => toast.success(`Added ${name} `);
+
 
 
     return (
 
         <>
+
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+            />
 
             <div className={`fixed top-0 right-0 z-50 transition-all duration-700
              bg-white min-h-screen w-80 shadow-lg ${isCartActive ? 'translate-x-0' : 'translate-x-full'}`}>
@@ -37,6 +46,7 @@ const CartPage = () => {
                             price={food.price}
                             img={food.img}
                             qty={food.qty}
+                            hadleToast={hadleToast}
 
                         />
                     })
@@ -47,11 +57,10 @@ const CartPage = () => {
             <button>
                 <FaShoppingCart
                     onClick={() => setIsCartActive(!isCartActive)}
-                    className='text-5xl bg-white p-2 rounded-full
-                fixed bottom-4 right-8
-            
-                
-                ' />
+                    className={`text-5xl bg-white p-2 rounded-full
+                fixed bottom-4 right-8 ${totalQty > 0 && "animate-bounce divide-lime-500 transition-all"} `}
+
+                />
             </button>
 
         </>
